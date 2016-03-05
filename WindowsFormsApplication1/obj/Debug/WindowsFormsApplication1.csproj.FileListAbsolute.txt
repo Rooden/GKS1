@@ -1,18 +1,21 @@
-c:\users\mikejlu\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
-c:\users\mikejlu\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
-c:\users\mikejlu\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
-c:\users\mikejlu\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
-c:\users\mikejlu\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
-c:\users\mikejlu\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
-c:\users\mikejlu\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
-c:\users\mikejlu\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
-c:\users\mikejlu\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
-D:\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
-D:\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
-D:\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
-D:\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
-D:\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
-D:\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
-D:\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
-D:\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
-D:\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Attribute.resources
+\\Mac\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+\\Mac\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+\\Mac\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+\\Mac\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+\\Mac\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+\\Mac\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+\\Mac\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+\\Mac\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+\\Mac\Dropbox\Study\4\GKS\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
+\\Mac\Dropbox\Study\4\GKS\Simplex\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+\\Mac\Dropbox\Study\4\GKS\Simplex\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+\\Mac\Dropbox\Study\4\GKS\Simplex\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+\\Mac\Dropbox\Study\4\GKS\Simplex\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+\\Mac\Dropbox\Study\4\GKS\Simplex\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+\\Mac\Dropbox\Study\4\GKS\Simplex\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+\\Mac\Dropbox\Study\4\GKS\Simplex\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
+\\Mac\Dropbox\Study\4\GKS\Simplex\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+\\Mac\Dropbox\Study\4\GKS\Simplex\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+D:\Dropbox\Study\4\GKS\Simplex\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+D:\Dropbox\Study\4\GKS\Simplex\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+D:\Dropbox\Study\4\GKS\Simplex\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
