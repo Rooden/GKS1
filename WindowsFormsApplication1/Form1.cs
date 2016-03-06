@@ -1,59 +1,136 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Properties;
 
 namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        List<Attribute> matrixAttr = new List<Attribute>();
-        TextBox[] textBox;
-        double[,] A1;
-        double[] tempArray;
+        readonly StartForm _startForm = new StartForm();
 
-        int x = 0;
-        int y = 0;
-        int step = 0;
-        int colPosition = 0;
-        int rawPosition = 0;
+        List<Attribute> _lstMatrixAttr = new List<Attribute>();
+        private TextBox[] _txtList;
+        private ComboBox[] _cboList;
+        private Label[] _lblList;
+        private double[,] _a1;
+        private double[] _tempArray;
+
+        private int _numOfCond;
+        private int _numOfX;
+        private int _step;
+        private int _colPosition;
+        private int _rawPosition;
 
         public Form1()
         {
-            /*for (int i = 0; i < 3; i++)
-            {
-                Controls.Add(new TextBox()
-                {
-                    Name = "TextBox" + i,
-                    Location = new System.Drawing.Point(40 + 150 * i, 70),
-                    Size = new System.Drawing.Size(100, 30)
-                });
-            }*/
-            //StartButton.Enabled = false;
             InitializeComponent();
         }
 
-        private void setupTextBoxes()
+        private void Form1_Shown(object sender, EventArgs e)
         {
-            int count = 0;
-            textBox = new TextBox[x * y];
-            for (int i = 0; i < x; i++)
-            {
-                int height = 30 + 100 * i;
-                for (int j = 0; j < y; j++, count++)
-                {
-                    textBox[count] = new TextBox();
-                    textBox[count].Name = "TextBox" + count;
-                    textBox[count].Location = new System.Drawing.Point(40 + 150 * j, height);
-                    textBox[count].Size = new System.Drawing.Size(100, 30);
-                    Controls.Add(textBox[count]);
-                }
-            }
+            _startForm.ShowDialog();
+
+            _numOfCond = _startForm.numOfCond + 1; // +1 for F(x)
+            _numOfX = _startForm.numOfX + 1; // +1 for sum in each line
+
+            SetupTextBoxes();
+
+            StartButton.Enabled = true;
         }
 
-        private void removeTextBoxes()
+        private void SetupTextBoxes()
         {
-            foreach (TextBox t in textBox)
+            int count = 0;
+            int cbo = 0;
+            _txtList = new TextBox[_numOfCond * _numOfX];
+            _lblList = new Label[_numOfCond * _numOfX];
+            _cboList = new ComboBox[_numOfCond - 1];
+
+            for (int i = 0; i < _numOfCond; i++)
+            {
+                int height = 30 + 30 * i;
+                for (int j = 0; j < _numOfX; j++, count++)
+                {
+                    if (j != _numOfX - 1)
+                    {
+                        _txtList[count] = NewTextBox(j, 15 + 53 * j, height);
+
+                        _lblList[count] = NewLabel(j, 48 + 53 * j, height);
+
+                        Controls.Add(_lblList[count]);
+                        Controls.Add(_txtList[count]);
+                    }
+                    else if (i == _numOfCond - 1)
+                    {
+                        _lblList[count] = new Label
+                        {
+                            Text = "C =",
+                            Location = new Point(37 + 53 * j, height + 3),
+                            AutoSize = true
+                        };
+
+                        _txtList[count] = NewTextBox(j, 60 + 53 * j, height);
+
+                        Controls.Add(_lblList[count]);
+                        Controls.Add(_txtList[count]);
+                    }
+                    else
+                    {
+                        _cboList[cbo] = NewComboBox(15 + 53 * j, height);
+
+                        _txtList[count] = NewTextBox(j, 60 + 53 * j, height);
+
+                        Controls.Add(_cboList[cbo++]);
+                        Controls.Add(_txtList[count]);
+                    }
+                }
+            }
+
+            OutBox.AppendText("Step1 finish");
+        }
+
+        private static TextBox NewTextBox(int j, int width, int height)
+        {
+            var temp = new TextBox
+            {
+                Location = new Point(width, height),
+                Size = new Size(30, 20)
+            };
+
+            return temp;
+        }
+
+        private static Label NewLabel(int j, int width, int height)
+        {
+            var temp = new Label
+            {
+                Text = "x" + (j + 1),
+                Location = new Point(width, height + 5),
+                AutoSize = true
+            };
+
+            return temp;
+        }
+
+        private static ComboBox NewComboBox(int width, int height)
+        {
+            var temp = new ComboBox
+            {
+                Location = new Point(width, height),
+                Size = new Size(37, 20),
+                Items = { ">=", "<=" },
+                SelectedIndex = 0
+            };
+
+            return temp;
+        }
+
+        private void RemoveTextBoxes()
+        {
+            foreach (TextBox t in _txtList)
             {
                 Controls.Remove(t);
                 t.Dispose();
@@ -64,160 +141,160 @@ namespace WindowsFormsApplication1
         {
             OutBox.Clear();
 
-            step = 0;
+            _step = 0;
 
-            x = int.Parse(Xbox.Text);
-            y = int.Parse(Ybox.Text);
+            _numOfX = int.Parse(Xbox.Text);
+            _numOfCond = int.Parse(CondBox.Text);
 
-            A1 = new double[x, y];
-            fillMatrix();
+            _a1 = new double[_numOfCond, _numOfX];
+            FillMatrix();
 
-            fillMatrixAttr();
+            FillMatrixAttr();
 
             do
             {
-                step++;
+                _step++;
 
-                findColPosition();
+                FindColPosition();
                 
-                tempArray = new double[x - 1];
-                fillTempArray();
+                _tempArray = new double[_numOfCond - 1];
+                FillTempArray();
 
-                findRawPosition();
+                FindRawPosition();
 
-                cutFullLine();
-                cutAllLines();
-                cutResultLine();
+                CutFullLine();
+                CutAllLines();
+                CutResultLine();
 
-                rebuildMatrixAttr();
+                RebuildMatrixAttr();
 
-                print();
-            } while (repeat());
+                Print();
+            } while (Repeat());
 
-            sort();
-            print();
+            Sort();
+            Print();
         }
 
-        private void fillMatrix()
+        private void FillMatrix()
         {
-            for (int i = 0, index = 0; i < x; i++)
-                for (int j = 0; j < y; j++, index++)
-                    A1[i, j] = parseElement(index);
+            for (int i = 0, index = 0; i < _numOfCond; i++)
+                for (int j = 0; j < _numOfX; j++, index++)
+                    _a1[i, j] = ParseElement(index);
         }
 
-        private double parseElement(int index)
+        private double ParseElement(int index)
         {
-            return double.Parse(parseLine()[index]);
+            return double.Parse(ParseLine()[index]);
         }
 
-        private List<string> parseLine()
+        private List<string> ParseLine()
         {
             return EnterBox.Text.Split(new[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).ToList();
         }
 
-        private void fillMatrixAttr()
+        private void FillMatrixAttr()
         {
-            for (int i = y - x, count = 0; i < y; count++, i++)
+            for (int i = _numOfX - _numOfCond, count = 0; i < _numOfX; count++, i++)
             {
-                matrixAttr.Add(new Attribute()
+                _lstMatrixAttr.Add(new Attribute()
                 {
-                    value = A1[count, y - 1]
+                    value = _a1[count, _numOfX - 1]
                 });
 
-                if (i == y - 1)
-                    matrixAttr[count].name = "P";
+                if (i == _numOfX - 1)
+                    _lstMatrixAttr[count].name = "P";
                 else
-                    matrixAttr[count].name = "x" + i;
+                    _lstMatrixAttr[count].name = "x" + i;
             }
         }
 
-        private void findColPosition()
+        private void FindColPosition()
         {
             double min = 0;
-            colPosition = 0;
+            _colPosition = 0;
             // Find min element in last line and set colPosition
-            for (int i = 0; i < y; i++)
-                if (A1[x - 1, i] < 0 && min > A1[x - 1, i])
+            for (int i = 0; i < _numOfX; i++)
+                if (_a1[_numOfCond - 1, i] < 0 && min > _a1[_numOfCond - 1, i])
                 {
-                    min = A1[x - 1, i];
-                    colPosition = i;
+                    min = _a1[_numOfCond - 1, i];
+                    _colPosition = i;
                 }
         }
 
-        private void fillTempArray()
+        private void FillTempArray()
         {
             // A1[Last col] / A1[colPosition]
-            for (int i = 0; i < tempArray.Length; i++)
-                tempArray[i] = A1[i, y - 1] / A1[i, colPosition];
+            for (int i = 0; i < _tempArray.Length; i++)
+                _tempArray[i] = _a1[i, _numOfX - 1] / _a1[i, _colPosition];
         }
 
-        private void findRawPosition()
+        private void FindRawPosition()
         {
-            double min = tempArray[0];
-            rawPosition = 0;
+            double min = _tempArray[0];
+            _rawPosition = 0;
             // Find min element and set rawPosition
-            for (int i = 0; i < tempArray.Length; i++)
-                if (min > tempArray[i])
+            for (int i = 0; i < _tempArray.Length; i++)
+                if (min > _tempArray[i])
                 {
-                    min = tempArray[i];
-                    rawPosition = i;
+                    min = _tempArray[i];
+                    _rawPosition = i;
                 }
         }
 
-        private void cutFullLine()
+        private void CutFullLine()
         {
-            double num = A1[rawPosition, colPosition];
+            double num = _a1[_rawPosition, _colPosition];
             // A1[rawPosition] / A1[rawPosition, colPosition]
-            for (int i = 0; i < y; i++)
-                A1[rawPosition, i] = A1[rawPosition, i] / num;
+            for (int i = 0; i < _numOfX; i++)
+                _a1[_rawPosition, i] = _a1[_rawPosition, i] / num;
         }
 
-        private void cutAllLines()
+        private void CutAllLines()
         {
             // A1[raws] - A1[rawPosition] * A1[colPosition]
-            for (int i = 0; i < x - 1; i++)
-                if (i != rawPosition)
+            for (int i = 0; i < _numOfCond - 1; i++)
+                if (i != _rawPosition)
                 {
-                    double num = A1[i, colPosition];
-                    for (int j = 0; j < y; j++)
-                        A1[i, j] = A1[i, j] - A1[rawPosition, j] * Math.Abs(num);
+                    double num = _a1[i, _colPosition];
+                    for (int j = 0; j < _numOfX; j++)
+                        _a1[i, j] = _a1[i, j] - _a1[_rawPosition, j] * Math.Abs(num);
                 }
         }
 
-        private void cutResultLine()
+        private void CutResultLine()
         {
-            double num = A1[x - 1, colPosition];
+            double num = _a1[_numOfCond - 1, _colPosition];
             // A1[Last raw] + A1[rawPosition] * A1[colPosition]
-            for (int i = 0; i < y; i++)
-                A1[x - 1, i] = A1[x - 1, i] + A1[rawPosition, i] * Math.Abs(num);
+            for (int i = 0; i < _numOfX; i++)
+                _a1[_numOfCond - 1, i] = _a1[_numOfCond - 1, i] + _a1[_rawPosition, i] * Math.Abs(num);
         }
 
-        private void rebuildMatrixAttr()
+        private void RebuildMatrixAttr()
         {
             // Change values and rawPosition.name beacause of new basic solution
-            for (int i = 0; i < matrixAttr.Count; i++)
+            for (int i = 0; i < _lstMatrixAttr.Count; i++)
             {
-                matrixAttr[i].value = A1[i, y - 1];
+                _lstMatrixAttr[i].value = _a1[i, _numOfX - 1];
 
-                if (i == rawPosition)
-                    matrixAttr[i].name = "x" + i;
+                if (i == _rawPosition)
+                    _lstMatrixAttr[i].name = "x" + i;
             }
         }
 
-        private void print()
+        private void Print()
         {
             // Print out
-            OutBox.AppendText("Step #" + step);
-            for (int i = 0; i < x; i++)
+            OutBox.AppendText("Step #" + _step);
+            for (int i = 0; i < _numOfCond; i++)
             {
-                OutBox.AppendText(matrixAttr[i].name + " = " + matrixAttr[i].value + "\n");
+                OutBox.AppendText(_lstMatrixAttr[i].name + " = " + _lstMatrixAttr[i].value + "\n");
             }
         }
-
-        private void sort()
+        
+        private void Sort()
         {
             // Sort by Name column
-            matrixAttr.Sort((a, b) => {
+            _lstMatrixAttr.Sort((a, b) => {
                 if (a.name != "P" && b.name != "P")
                     return a.name.CompareTo(b.name);
 
@@ -225,26 +302,23 @@ namespace WindowsFormsApplication1
             });
         }
 
-        private bool repeat()
+        private bool Repeat()
         {
             // Repeat?
             double min = 0;
-            for (int i = 0; i < y; i++)
-                if (A1[x - 1, i] < 0 && min > A1[x - 1, i])
-                    min = A1[x - 1, i];
+            for (int i = 0; i < _numOfX; i++)
+                if (_a1[_numOfCond - 1, i] < 0 && min > _a1[_numOfCond - 1, i])
+                    min = _a1[_numOfCond - 1, i];
 
-            return bool.Parse(min.ToString());
+            return min < 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //removeTextBoxes();
+            _startForm.ShowDialog();
 
-            x = int.Parse(Xbox.Text);
-            y = int.Parse(Ybox.Text);
-
-            setupTextBoxes();
-            StartButton.Enabled = true;
+            _numOfCond = _startForm.numOfCond + 1; // +1 for F(x)
+            _numOfX = _startForm.numOfX + 1; // +1 for sum in each line
         }
     }
 }

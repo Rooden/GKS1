@@ -30,9 +30,9 @@
         {
             this.EnterBox = new System.Windows.Forms.TextBox();
             this.OutBox = new System.Windows.Forms.TextBox();
-            this.Xbox = new System.Windows.Forms.TextBox();
+            this.CondBox = new System.Windows.Forms.TextBox();
             this.StartButton = new System.Windows.Forms.Button();
-            this.Ybox = new System.Windows.Forms.TextBox();
+            this.Xbox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -42,61 +42,61 @@
             // 
             // EnterBox
             // 
-            this.EnterBox.Location = new System.Drawing.Point(15, 147);
+            this.EnterBox.Location = new System.Drawing.Point(599, 344);
             this.EnterBox.Multiline = true;
             this.EnterBox.Name = "EnterBox";
-            this.EnterBox.Size = new System.Drawing.Size(285, 183);
+            this.EnterBox.Size = new System.Drawing.Size(77, 53);
             this.EnterBox.TabIndex = 0;
             // 
             // OutBox
             // 
-            this.OutBox.Location = new System.Drawing.Point(364, 61);
+            this.OutBox.Location = new System.Drawing.Point(512, 149);
             this.OutBox.Multiline = true;
             this.OutBox.Name = "OutBox";
-            this.OutBox.Size = new System.Drawing.Size(312, 269);
+            this.OutBox.Size = new System.Drawing.Size(164, 181);
             this.OutBox.TabIndex = 1;
             // 
-            // Xbox
+            // CondBox
             // 
-            this.Xbox.Location = new System.Drawing.Point(448, 341);
-            this.Xbox.Name = "Xbox";
-            this.Xbox.Size = new System.Drawing.Size(100, 20);
-            this.Xbox.TabIndex = 2;
+            this.CondBox.Location = new System.Drawing.Point(474, 381);
+            this.CondBox.Name = "CondBox";
+            this.CondBox.Size = new System.Drawing.Size(38, 20);
+            this.CondBox.TabIndex = 2;
             // 
             // StartButton
             // 
-            this.StartButton.Location = new System.Drawing.Point(100, 341);
+            this.StartButton.Location = new System.Drawing.Point(15, 384);
             this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(125, 77);
+            this.StartButton.Size = new System.Drawing.Size(70, 50);
             this.StartButton.TabIndex = 3;
             this.StartButton.Text = "Поехали!";
             this.StartButton.UseVisualStyleBackColor = true;
             this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
             // 
-            // Ybox
+            // Xbox
             // 
-            this.Ybox.Location = new System.Drawing.Point(448, 384);
-            this.Ybox.Name = "Ybox";
-            this.Ybox.Size = new System.Drawing.Size(100, 20);
-            this.Ybox.TabIndex = 4;
+            this.Xbox.Location = new System.Drawing.Point(474, 355);
+            this.Xbox.Name = "Xbox";
+            this.Xbox.Size = new System.Drawing.Size(30, 20);
+            this.Xbox.TabIndex = 4;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(362, 341);
+            this.label1.Location = new System.Drawing.Point(361, 358);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 13);
+            this.label1.Size = new System.Drawing.Size(66, 13);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Размер по Х";
+            this.label1.Text = "Number of X";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(361, 384);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 13);
+            this.label2.Size = new System.Drawing.Size(107, 13);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Размер по У";
+            this.label2.Text = "Number of conditions";
             // 
             // label3
             // 
@@ -110,7 +110,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(373, 11);
+            this.label4.Location = new System.Drawing.Point(509, 120);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(139, 13);
             this.label4.TabIndex = 8;
@@ -118,7 +118,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(261, 394);
+            this.button1.Location = new System.Drawing.Point(91, 411);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 9;
@@ -138,15 +138,16 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.Ybox);
-            this.Controls.Add(this.StartButton);
             this.Controls.Add(this.Xbox);
+            this.Controls.Add(this.StartButton);
+            this.Controls.Add(this.CondBox);
             this.Controls.Add(this.OutBox);
             this.Controls.Add(this.EnterBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "Лаба 1";
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,9 +157,9 @@
 
         private System.Windows.Forms.TextBox EnterBox;
         private System.Windows.Forms.TextBox OutBox;
-        private System.Windows.Forms.TextBox Xbox;
+        private System.Windows.Forms.TextBox CondBox;
         public System.Windows.Forms.Button StartButton;
-        private System.Windows.Forms.TextBox Ybox;
+        private System.Windows.Forms.TextBox Xbox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
