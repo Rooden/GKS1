@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using WindowsFormsApplication1.Properties;
 
 namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        readonly StartForm _startForm = new StartForm();
+        private StartForm _startForm = new StartForm();
 
-        List<Attribute> _lstMatrixAttr = new List<Attribute>();
+        private List<Attribute> _lstMatrixAttr = new List<Attribute>();
         private TextBox[] _txtList;
         private ComboBox[] _cboList;
         private Label[] _lblList;
@@ -23,6 +23,8 @@ namespace WindowsFormsApplication1
         private int _step;
         private int _colPosition;
         private int _rawPosition;
+        private int _numOfNewX;
+        private int _deviation;
 
         public Form1()
         {
@@ -33,8 +35,10 @@ namespace WindowsFormsApplication1
         {
             _startForm.ShowDialog();
 
+            if (_startForm.numOfCond == 0)
+                return;
             _numOfCond = _startForm.numOfCond + 1; // +1 for F(x)
-            _numOfX = _startForm.numOfX + 1; // +1 for sum in each line
+            _numOfX = _startForm.numOfX + 1; // +1 for sum in each line and F(x) value
 
             SetupTextBoxes();
 
@@ -96,6 +100,7 @@ namespace WindowsFormsApplication1
         {
             var temp = new TextBox
             {
+                Text = "0",
                 Location = new Point(width, height),
                 Size = new Size(30, 20)
             };
@@ -143,10 +148,6 @@ namespace WindowsFormsApplication1
 
             _step = 0;
 
-            _numOfX = int.Parse(Xbox.Text);
-            _numOfCond = int.Parse(CondBox.Text);
-
-            _a1 = new double[_numOfCond, _numOfX];
             FillMatrix();
 
             FillMatrixAttr();
@@ -156,7 +157,7 @@ namespace WindowsFormsApplication1
                 _step++;
 
                 FindColPosition();
-                
+
                 _tempArray = new double[_numOfCond - 1];
                 FillTempArray();
 
@@ -175,28 +176,71 @@ namespace WindowsFormsApplication1
             Print();
         }
 
+        private void FindNumberOfNewX()
+        {
+            _numOfNewX = 0;
+            foreach (var comboBox in _cboList)
+                if (comboBox.SelectedIndex == 0)
+                {
+                    _numOfNewX++;
+                }
+                else
+                {
+                    _deviation++;
+                    _numOfNewX += 2;
+                }
+        }
+
         private void FillMatrix()
         {
-            for (int i = 0, index = 0; i < _numOfCond; i++)
-                for (int j = 0; j < _numOfX; j++, index++)
-                    _a1[i, j] = ParseElement(index);
+            FindNumberOfNewX();
+
+            _a1 = new double[_numOfCond, _numOfX + _numOfNewX + 1];
+            _a1[_numOfCond - 1, 0] = 1;
+
+            for (int i = 0, count = 0; i < _numOfCond; i++)
+                for (int j = 1; j < _numOfX; j++, count++)
+                {
+                    var temp = _txtList[count].Text;
+
+                    if (i == _numOfCond - 1)
+                        _a1[i, j] = -Convert.ToDouble(temp);
+                    else
+                        _a1[i, j] = Convert.ToDouble(temp);
+
+                    if (j == _numOfX - 1)
+                    {
+                        temp = _txtList[++count].Text;
+                        _a1[i, _numOfX + _numOfNewX] = Convert.ToDouble(temp);
+                    }
+                }
+
+            FillMatrixWithNewX();
+            _numOfX += _numOfNewX + 1;
         }
 
-        private double ParseElement(int index)
+        private void FillMatrixWithNewX()
         {
-            return double.Parse(ParseLine()[index]);
-        }
-
-        private List<string> ParseLine()
-        {
-            return EnterBox.Text.Split(new[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            for (int i = 0; i < _cboList.Length; i++)
+                switch (_cboList[i].SelectedIndex)
+                {
+                    case 0:
+                        int index = _numOfX + i;
+                        _a1[i, index] = 1;
+                        break;
+                    case 1:
+                        index = _numOfX + i;
+                        _a1[i, index] = -1;
+                        _a1[i, index + _deviation] = 1;
+                        break;
+                }
         }
 
         private void FillMatrixAttr()
         {
             for (int i = _numOfX - _numOfCond, count = 0; i < _numOfX; count++, i++)
             {
-                _lstMatrixAttr.Add(new Attribute()
+                _lstMatrixAttr.Add(new Attribute
                 {
                     value = _a1[count, _numOfX - 1]
                 });
@@ -290,11 +334,12 @@ namespace WindowsFormsApplication1
                 OutBox.AppendText(_lstMatrixAttr[i].name + " = " + _lstMatrixAttr[i].value + "\n");
             }
         }
-        
+
         private void Sort()
         {
             // Sort by Name column
-            _lstMatrixAttr.Sort((a, b) => {
+            _lstMatrixAttr.Sort((a, b) =>
+            {
                 if (a.name != "P" && b.name != "P")
                     return a.name.CompareTo(b.name);
 
@@ -317,8 +362,12 @@ namespace WindowsFormsApplication1
         {
             _startForm.ShowDialog();
 
+            if (_startForm.numOfCond == 0)
+                return;
             _numOfCond = _startForm.numOfCond + 1; // +1 for F(x)
             _numOfX = _startForm.numOfX + 1; // +1 for sum in each line
+
+            SetupTextBoxes();
         }
     }
 }
